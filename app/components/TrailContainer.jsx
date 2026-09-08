@@ -12,19 +12,23 @@ const TrailContainer = () => {
     const interpolatedMousePosRef = useRef({ x: 0, y: 0 });
     const isDesktopRef = useRef(false);
     useEffect(() => {
+        const inDuration = 750;
+        const staggerIn = 100;
+        const totalInTime = 4.5 * staggerIn + inDuration; 
+
         const config = {
-            imageLifespan: 1000,
+            imageLifespan: totalInTime + 200, 
             mouseThreshold: 150,
-            inDuration: 750,
+            inDuration,
             outDuration: 1000,
-            staggerIn: 100,
+            staggerIn,
             staggerOut: 25,
             slideDuration: 1000,
             slideEasing: "cubic-bezier(.25,0.46,0.45,0.94)",
             easing: "cubic-bezier(0.87,0,0.13,1)"
         }
-        const trailImageCount = 5;
-        const images = Array.from({ length: trailImageCount }, (_, i) => `/trail-images/img${Number(i + 1)}.jpg`)
+        const trailImageCount = 3;
+        const images = Array.from({ length: trailImageCount }, (_, i) => `/trail-images/img${i + 1}.jpg`)
 
         console.log(images)
 
@@ -110,7 +114,7 @@ const TrailContainer = () => {
                     const delay = distanceFromMiddle * config.staggerIn;
 
                     setTimeout(() => {
-                        layer.style.clipPath = `polygon(0% ${startY}%, 100% ${startY}, 100% ${endY}%, 0% ${endY}%)`
+                        layer.style.clipPath = `polygon(0% ${startY}%, 100% ${startY}%, 100% ${endY}%, 0% ${endY}%)`
                     }, delay);
                 })
             })
@@ -140,7 +144,7 @@ const TrailContainer = () => {
                     layer.style.transition = `clip-path ${config.outDuration}ms ${config.easing}`;
 
                     setTimeout(() => {
-                        layer.style.clipPath = `polygon(50% ${startY}%, 50% ${startY}%, 50% ${endY}%, 50%${endY}%)`;
+                        layer.style.clipPath = `polygon(50% ${startY}%, 50% ${startY}%, 50% ${endY}%, 50% ${endY}%)`;
                     }, delay);
 
                 });
@@ -213,12 +217,16 @@ const TrailContainer = () => {
 
             isDesktopRef.current = window.innerWidth > 1000;
 
-            if (!isDesktopRef.current && !wasDesktop) {
+            if (isDesktopRef.current && !wasDesktop) {
                 cleanupMouseListener = startAnimation();
             }
             else if (!isDesktopRef.current && wasDesktop) {
                 stopAnimation();
-                if (cleanupMouseListener) cleanupMouseListener();
+
+                if (cleanupMouseListener) {
+                    cleanupMouseListener();
+                    cleanupMouseListener = null;
+                }
             }
         };
 

@@ -52,7 +52,7 @@ p {
 .trail-img {
   position: absolute;
   width: 175px;
-  height: 175px;
+  height: 175px; 
   pointer-events: none;
 }
 
