@@ -28,7 +28,7 @@ const TrailContainer = () => {
             easing: "cubic-bezier(0.87,0,0.13,1)"
         }
         const trailImageCount = 4;
-        const images = Array.from({ length: trailImageCount }, (_, i) => `/trail-images/img${i + 1}.jpg`) 
+        const images = Array.from({ length: trailImageCount }, (_, i) => `/trail-images/img${i + 1}.jpg`)
 
         const trailContainer = trailContainerRef.current;
 
@@ -244,7 +244,8 @@ const TrailContainer = () => {
         };
 
     }, [])
-    return <div className="trail-container" ref={trailContainerRef}>
+    return <div className="trail-container" ref={trailContainerRef}
+        style={{ height: "100vh" }}>
 
     </div>
 }
