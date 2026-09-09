@@ -14,10 +14,10 @@ const TrailContainer = () => {
     useEffect(() => {
         const inDuration = 750;
         const staggerIn = 100;
-        const totalInTime = 4.5 * staggerIn + inDuration; 
+        const totalInTime = 4.5 * staggerIn + inDuration;
 
         const config = {
-            imageLifespan: totalInTime + 200, 
+            imageLifespan: totalInTime + 200,
             mouseThreshold: 150,
             inDuration,
             outDuration: 1000,
@@ -27,10 +27,8 @@ const TrailContainer = () => {
             slideEasing: "cubic-bezier(.25,0.46,0.45,0.94)",
             easing: "cubic-bezier(0.87,0,0.13,1)"
         }
-        const trailImageCount = 3;
-        const images = Array.from({ length: trailImageCount }, (_, i) => `/trail-images/img${i + 1}.jpg`)
-
-        console.log(images)
+        const trailImageCount = 4;
+        const images = Array.from({ length: trailImageCount }, (_, i) => `/trail-images/img${i + 1}.jpg`) 
 
         const trailContainer = trailContainerRef.current;
 
@@ -174,14 +172,13 @@ const TrailContainer = () => {
                 interpolatedMousePosRef.current.y || mousePosRef.current.y,
                 mousePosRef.current.y, 0.1
             );
-            if (distance > config.mouseThreshold &&
-                isInTrailContainer(mousePosRef.current.x, mousePosRef.current.y)) {
+
+            if (distance > config.mouseThreshold && isInTrailContainer(mousePosRef.current.x, mousePosRef.current.y)) {
                 createTrailImage();
                 lastMousePosRef.current = { ...mousePosRef.current };
             }
             removeOldImages();
             animationStateRef.current = requestAnimationFrame(render);
-
         }
 
         const startAnimation = () => {
